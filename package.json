@@ -1,0 +1,36 @@
+{
+  "name": "butterflies",
+  "version": "1.0.0",
+  "description": "A simple page with Cycle.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annavlz/butterflies.git"
+  },
+  "author": "Anna Lezhikova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annavlz/butterflies/issues"
+  },
+  "homepage": "https://github.com/annavlz/butterflies#readme",
+  "devDependencies": {
+    "jspm": "^0.16.11"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "app"
+    },
+    "dependencies": {
+      "@cycle/core": "npm:@cycle/core@^3.1.0",
+      "@cycle/dom": "npm:@cycle/dom@^5.3.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
