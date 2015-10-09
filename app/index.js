@@ -23,23 +23,22 @@ function intent(DOM) {
 }
 
 function model(actions) {
-  const source$ = Rx.Observable.just('./assets/image.gif')
   const position$ = actions.map(ev => {
       return {x: ev.pageX, y: ev.pageY}
   })
-  return combineLatestObj({source$, position$})
+  return position$
 }
 
 function view(item$) {
   console.log('view')
-  return item$.map(({source, position}) => {
+  return item$.map(position => {
     const style = {
       width: '50px',
       top: String(position.y+'px'),
       left: String(position.x+'px'),
       position: 'absolute'
     };
-    console.log(style)
+    const source = './assets/image.gif'
     return <img src={source} style={style}/>
   })
 }
