@@ -19,6 +19,7 @@ System.config({
     "babel": "npm:babel-core@5.8.25",
     "babel-runtime": "npm:babel-runtime@5.8.25",
     "core-js": "npm:core-js@1.2.1",
+    "knockout": "npm:knockout@3.3.0",
     "rx-combine-latest-obj": "npm:rx-combine-latest-obj@1.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -124,6 +125,9 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:knockout@3.3.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:next-tick@0.2.2": {
       "process": "github:jspm/nodelibs-process@0.1.1"

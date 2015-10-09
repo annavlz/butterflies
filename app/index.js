@@ -3,6 +3,7 @@
 import {run, Rx} from '@cycle/core';
 import {makeDOMDriver, h, hJSX} from '@cycle/dom';
 import combineLatestObj from 'rx-combine-latest-obj'
+import ko from 'knockout'
 
 function main(sources) {
   console.log('main')
@@ -24,21 +25,22 @@ function intent(DOM) {
 
 function model(actions) {
   const list = []
-  const list$ = Rx.Observable.from(list).subscribe
+  const list$ = Rx.Observable.from(list)
   const position$ = actions.map(ev => {
       list.push({x: ev.pageX, y: ev.pageY})
-      list$.map(obj => console.log(obj))
+      list$.map(i => console.log(i))
+      console.log(list$)
+      list.forEach(obj => console.log("obg", obj))
       return {x: ev.pageX, y: ev.pageY}
-
   })
-
+  // console.log(position$)
   return position$
 }
 
 function view(item$) {
   console.log('view')
   return item$.map(position => {
-    console.log("position", position)
+    // console.log("position", position)
     const style = {
       width: '50px',
       top: String(position.y+'px'),
