@@ -6,12 +6,12 @@ import item from './item';
 
 function intent(DOM) {
   const addItem$ = Rx.Observable.fromEvent(document, 'click')
-  // const addItem$ = DOM.select('.list .add-one-btn')
-  //                 .events('click').map(() => 1)
-  return { addItem$ }
+                    .map(ev => {return {x: ev.pageX, y: ev.pageY}})
+  return addItem$
 }
 
 function model(actions, itemFn) {
+
   function createNewItem(props) {
     const sinks = itemFn(props);
     sinks.DOM = sinks.DOM.replay(null, 1);
@@ -19,11 +19,11 @@ function model(actions, itemFn) {
     return {DOM: sinks.DOM};
   }
 
-  const initialState = [createNewItem()]
+  const initialState = [createNewItem({x: 100, y:100})]
 
-  const addItemMod$ = actions.addItem$.map(amount => {
+  const addItemMod$ = actions.map(ev => {
     let newItems = [];
-    newItems.push(createNewItem());
+    newItems.push(createNewItem({x: ev.x, y: ev.y}));
     return function (listItems) {
       return listItems.concat(newItems);
     };
@@ -42,13 +42,16 @@ function view(itemDOMs$) {
 }
 
 function makeItemWrapper(DOM) {
-  return function itemWrapper() {
-    const props$ =  Rx.Observable.just('blue')
-    return item(props$);
+  return function itemWrapper(props) {
+    const propsObservables = {
+      x$: Rx.Observable.just(props.x),
+      y$: Rx.Observable.just(props.y)
+    }
+    return item({props: propsObservables});
   }
 }
 
-function list(sources, name = []) {
+function list(sources) {
   const actions = intent(sources.DOM);
   const itemWrapper = makeItemWrapper(sources.DOM);
   const items$ = model(actions, itemWrapper);

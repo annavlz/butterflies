@@ -1,24 +1,28 @@
 /** @jsx hJSX */
+import {hJSX} from '@cycle/dom';
+import combineLatestObj from 'rx-combine-latest-obj';
 
-import {h, hJSX} from '@cycle/dom';
+function model(props) {
+  const posX$ = props.x$
+  const posY$ = props.y$
+  return combineLatestObj({posX$, posY$})
+}
 
-function view(props) {
-  return props.map(x => {
+function view(state$) {
+  return state$.map(item => {
     const style = {
-      width: '100px',
-      // top: String(position.y+'px'),
-      // left: String(position.x+'px'),
-      // position: 'absolute'
+      width: '50px',
+      top: `${item.posY}px`,
+      left: `${item.posX}px`,
+      position: 'absolute'
     };
     const source = './assets/image.gif'
     return <img src={source} style={style}/>
   });
 }
 
-function item(props) {
-  return {
-    DOM: view(props)
-  };
+function item(sources) {
+  return { DOM: view(model(sources.props)) }
 }
 
 export default item;
