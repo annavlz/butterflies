@@ -1,17 +1,17 @@
-import {h} from '@cycle/dom';
+/** @jsx hJSX */
+
+import {h, hJSX} from '@cycle/dom';
 
 function view(props) {
   return props.map(x => {
     const style = {
-      border: '1px solid #000',
-      background: 'none repeat scroll 0% 0% red',
-      width: '170px',
-      height: '70px',
-      display: 'block',
-      padding: '20px',
-      margin: '10px 0px'
+      width: '100px',
+      // top: String(position.y+'px'),
+      // left: String(position.x+'px'),
+      // position: 'absolute'
     };
-    return h('div.item', {style});
+    const source = './assets/image.gif'
+    return <img src={source} style={style}/>
   });
 }
 
@@ -22,3 +22,5 @@ function item(props) {
 }
 
 export default item;
+
+

@@ -1,10 +1,13 @@
+/** @jsx hJSX */
+
 import {Rx} from '@cycle/core';
-import {h} from '@cycle/dom';
+import {h, hJSX} from '@cycle/dom';
 import item from './item';
 
 function intent(DOM) {
-  const addItem$ = DOM.select('.list .add-one-btn')
-                  .events('click').map(() => 1)
+  const addItem$ = Rx.Observable.fromEvent(document, 'click')
+  // const addItem$ = DOM.select('.list .add-one-btn')
+  //                 .events('click').map(() => 1)
   return { addItem$ }
 }
 
@@ -34,9 +37,7 @@ function model(actions, itemFn) {
 
 function view(itemDOMs$) {
   return itemDOMs$.map(itemDOMs =>
-    h('div.list',
-      [h('button.add-one-btn', 'Add New Item')].concat(itemDOMs)
-    )
+    h('div.list', itemDOMs)
   );
 }
 
