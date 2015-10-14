@@ -35,8 +35,8 @@ function model(actions, itemFn) {
 
 function view(itemDOMs$) {
   return itemDOMs$.map(itemDOMs =>
-    h('div.list', itemDOMs)
-  );
+    <div className="list">{itemDOMs}</div>
+  )
 }
 
 function makeItemWrapper(DOM) {
