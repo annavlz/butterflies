@@ -1,6 +1,6 @@
 /** @jsx hJSX */
-import {hJSX} from '@cycle/dom';
-import combineLatestObj from 'rx-combine-latest-obj';
+import {hJSX} from '@cycle/dom'
+import combineLatestObj from 'rx-combine-latest-obj'
 
 function model(props) {
   const posX$ = props.x$
@@ -25,6 +25,6 @@ function item(sources) {
   return { DOM: view(model(sources.props)) }
 }
 
-export default item;
+export default item
 
 

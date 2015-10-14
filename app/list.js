@@ -1,33 +1,31 @@
 /** @jsx hJSX */
 
-import {Rx} from '@cycle/core';
-import {h, hJSX} from '@cycle/dom';
-import item from './item';
+import {Rx} from '@cycle/core'
+import {hJSX} from '@cycle/dom'
+import item from './item'
 
 function intent(DOM) {
-  const addItem$ = Rx.Observable.fromEvent(document, 'click')
-                    .map(ev => {return {x: ev.pageX, y: ev.pageY}})
-  return addItem$
+  return Rx.Observable.fromEvent(document, 'click')
+    .map(ev => {return {x: ev.pageX, y: ev.pageY}})
 }
 
 function model(actions, itemFn) {
-
   function createNewItem(props) {
-    const sinks = itemFn(props);
-    sinks.DOM = sinks.DOM.replay(null, 1);
-    sinks.DOM.connect();
-    return {DOM: sinks.DOM};
+    const sinks = itemFn(props)
+    sinks.DOM = sinks.DOM.replay(null, 1)
+    sinks.DOM.connect()
+    return {DOM: sinks.DOM}
   }
 
   const initialState = [createNewItem({x: 100, y:100})]
 
   const addItemMod$ = actions.map(ev => {
-    let newItems = [];
-    newItems.push(createNewItem({x: ev.x, y: ev.y}));
+    let newItems = []
+    newItems.push(createNewItem({x: ev.x, y: ev.y}))
     return function (listItems) {
-      return listItems.concat(newItems);
-    };
-  });
+      return listItems.concat(newItems)
+    }
+  })
 
   return Rx.Observable.merge(addItemMod$)
     .startWith(initialState)
@@ -47,20 +45,20 @@ function makeItemWrapper(DOM) {
       x$: Rx.Observable.just(props.x),
       y$: Rx.Observable.just(props.y)
     }
-    return item({props: propsObservables});
+    return item({props: propsObservables})
   }
 }
 
 function list(sources) {
-  const actions = intent(sources.DOM);
-  const itemWrapper = makeItemWrapper(sources.DOM);
-  const items$ = model(actions, itemWrapper);
-  const itemDOMs$ = items$.map(items => items.map(item => item.DOM));
-  const vtree$ = view(itemDOMs$);
+  const actions = intent(sources.DOM)
+  const itemWrapper = makeItemWrapper(sources.DOM)
+  const items$ = model(actions, itemWrapper)
+  const itemDOMs$ = items$.map(items => items.map(item => item.DOM))
+  const vtree$ = view(itemDOMs$)
 
   return {
     DOM: vtree$
   };
 }
 
-export default list;
+export default list
