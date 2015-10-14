@@ -17,10 +17,20 @@ function intent(DOM) {
 }
 
 function model(actions) {
-  return actions
-    .map(ev => { return {x: ev.pageX, y: ev.pageY} })
+  const addItem$ = actions.map(ev => {
+    let list = []
+    list.push({x: ev.pageX, y: ev.pageY})
+    return function(listItems) {
+      return listItems.concat(list)
+    }
+  })
+  return Rx.Observable.from(addItem$)
     .startWith()
-    .scan((acc,curr) => {return acc, curr})
+    .scan((acc, newI) => {
+      acc.merge(newI)
+      return acc
+    })
+    .publishValue({}).refCount()
 }
 
 function view(item$) {
