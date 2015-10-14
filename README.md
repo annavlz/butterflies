@@ -8,4 +8,5 @@ To use this example:
 * go to the dir
 * `npm install`
 * `jspm install`
+* got to the 'app' dir
 * run a web server 
